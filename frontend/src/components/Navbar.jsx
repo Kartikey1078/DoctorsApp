@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
-  const {token,setToken,userData} = useContext(AppContext);
+  const { token, setToken, userData } = useContext(AppContext);
 
   const underlineColor = "#5f6fff";
   const navLinks = [
@@ -13,20 +13,19 @@ const Navbar = () => {
     { name: "ABOUT", path: "/about" },
     { name: "CONTACT", path: "/contact" },
     { name: "ADMIN LOGIN", path: "https://doctorsappadmin.onrender.com/" },
+    { name: "ADMIN LOGIN", path: "https://doctorsappadmin.onrender.com/" },
   ];
   const [activeLink, setActiveLink] = useState("/");
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const logout = ()=>{
-    setToken('')
-    localStorage.removeItem('token')
-    navigate("/")
-  }
-  const handleUnderline = (path) => {
-    setActiveLink(path); 
-    
+  const logout = () => {
+    setToken("");
+    localStorage.removeItem("token");
+    navigate("/");
   };
-  
+  const handleUnderline = (path) => {
+    setActiveLink(path);
+  };
 
   return (
     <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
@@ -60,32 +59,35 @@ const Navbar = () => {
       {/* Create account button */}
       <div className="flex gap-2">
         {token && userData ? (
-        <div className="flex items-center cursor-pointer group relative gap-2">
-        <button className="focus:outline-none">
-          <img
-            className="w-8 rounded-full"
-            src={userData.image}
-            alt=""
-          />
-        </button>
-        <img className="w-2.5" src={assets.dropdown_icon} alt="" />
-      
-        <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block group-focus-within:block">
-          <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
-            <p onMouseDown={() => navigate("my-profile")} className="hover:text-black cursor-pointer">
-              My Profile
-            </p>
-            <p onMouseDown={() => navigate("my-appointments")} className="hover:text-black cursor-pointer">
-              My Appointment
-            </p>
-            <p onMouseDown={logout} className="hover:text-black cursor-pointer">
-              Logout
-            </p>
+          <div className="flex items-center cursor-pointer group relative gap-2">
+            <button className="focus:outline-none">
+              <img className="w-8 rounded-full" src={userData.image} alt="" />
+            </button>
+            <img className="w-2.5" src={assets.dropdown_icon} alt="" />
+
+            <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block group-focus-within:block">
+              <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
+                <p
+                  onMouseDown={() => navigate("my-profile")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Profile
+                </p>
+                <p
+                  onMouseDown={() => navigate("my-appointments")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Appointment
+                </p>
+                <p
+                  onMouseDown={logout}
+                  className="hover:text-black cursor-pointer"
+                >
+                  Logout
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      
-          
         ) : (
           <button
             onClick={() => navigate("/login")}
@@ -99,7 +101,12 @@ const Navbar = () => {
             Create account
           </button>
         )}
-         <img onClick={()=> setShowMenu(true)} className="w-6 md:hidden" src={assets.menu_icon} alt="" />
+        <img
+          onClick={() => setShowMenu(true)}
+          className="w-6 md:hidden"
+          src={assets.menu_icon}
+          alt=""
+        />
         {/* mobile menu */}
         <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
             <div className="flex items-center justify-between px-5 py-6">

@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <form className="min-h-[80vh] flex items-center" onSubmit={onSubmitHandler}>
-      <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-[#5E5E5E] text-sm shadow-lg border-0">
+      <div className="flex flex-col gap-3 m-auto items-start p-6 w-[90%] sm:w-[380px] border rounded-xl text-[#5E5E5E] text-sm shadow-lg border-0">
         <p className="text-2xl font-semibold">
           {state === "Sign Up" ? "Create Account" : "Login"}
         </p>
