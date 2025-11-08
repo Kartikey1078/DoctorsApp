@@ -12,6 +12,7 @@ const Navbar = () => {
     { name: "ALL DOCTORS", path: "/doctors" },
     { name: "ABOUT", path: "/about" },
     { name: "CONTACT", path: "/contact" },
+    { name: "ADMIN LOGIN", path: "https://doctorsappadmin.onrender.com/" },
   ];
   const [activeLink, setActiveLink] = useState("/");
   const navigate = useNavigate();
