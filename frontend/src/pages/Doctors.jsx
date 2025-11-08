@@ -57,6 +57,7 @@ const Doctors = () => {
         >
           Filters
         </button>
+  
         <div
           className={`flex-col gap-4 text-sm text-gray-600 ${
             mobileFilter ? "block" : "hidden"
@@ -67,21 +68,23 @@ const Doctors = () => {
               key={spcl}
               onClick={() => handleSpecilaityFilter(spcl)}
               className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border mb-2 border-gray-300 rounded transition-all cursor-pointer 
-                ${activeSpcl === spcl ? "activeSpcl" : ""} `}
+                ${activeSpcl === spcl ? "activeSpcl" : ""}`}
             >
               {spcl}
             </p>
           ))}
         </div>
-
-        {/* Show skeleton while loading */}
+  
+        {/* Main content */}
         {loading ? (
+          // Show skeletons
           <div className="w-full grid grid-cols-auto md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
             {[...Array(6)].map((_, i) => (
               <DoctorCardSkeleton key={i} />
             ))}
           </div>
-        ) : filterDoc.length !== 0 ? (
+        ) : filterDoc && filterDoc.length > 0 ? (
+          // Show doctor cards
           <div className="w-full grid grid-cols-auto md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
             {filterDoc.map((doctor) => (
               <div
@@ -104,6 +107,7 @@ const Doctors = () => {
             ))}
           </div>
         ) : (
+          // Show "not available" only when loading = false and data empty
           <div className="w-full flex items-center justify-center py-10">
             <p className="text-gray-600 text-lg">
               Doctor's currently not available
@@ -113,6 +117,7 @@ const Doctors = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Doctors;

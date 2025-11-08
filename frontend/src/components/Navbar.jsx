@@ -13,7 +13,6 @@ const Navbar = () => {
     { name: "ABOUT", path: "/about" },
     { name: "CONTACT", path: "/contact" },
     { name: "ADMIN LOGIN", path: "https://doctorsappadmin.onrender.com/" },
-    { name: "ADMIN LOGIN", path: "https://doctorsappadmin.onrender.com/" },
   ];
   const [activeLink, setActiveLink] = useState("/");
   const navigate = useNavigate();
@@ -125,7 +124,7 @@ const Navbar = () => {
               onClick={() => setShowMenu(false)}
               className="px-4 py-2 rounded inline-block"
             >
-              ADMIN LOGIN
+              ADMIN LOGINN
             </a>
             </ul>
         </div>
