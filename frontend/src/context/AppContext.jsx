@@ -12,8 +12,12 @@ const AppContextProvider = ({ children }) => {
   // ✅ token from localStorage
   const [token, setToken] = useState(localStorage.getItem("token") || null);
 
+
   // ✅ doctors list state
   const [doctors, setDoctors] = useState([]);
+
+  // ✅ loading state for doctors
+const [doctorsLoading, setDoctorsLoading] = useState(true);
 
   // ✅ user profile state
   const [userData, setUserData] = useState({
@@ -31,15 +35,21 @@ const AppContextProvider = ({ children }) => {
   // -----------------------------
   const getDoctorsData = async () => {
     try {
+      setDoctorsLoading(true); // ✅ start loading
+  
       const { data } = await axios.get(`${backendURL}/api/doctor/list`);
+  
       if (data.success) {
         setDoctors(data.doctors);
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      setDoctorsLoading(false); // ✅ stop loading
     }
   };
+  
 
   // -----------------------------
   // 2. Load user profile
@@ -175,6 +185,7 @@ const AppContextProvider = ({ children }) => {
   // -----------------------------
   const value = {
     doctors,
+    doctorsLoading,
     currencySymbol,
     token,
     setToken,

@@ -1,42 +1,38 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import DoctorCardSkeleton from "../components/DoctorCardSkeleton"; // 👈 import skeleton
+import DoctorCardSkeleton from "../components/DoctorCardSkeleton";
 
 const Doctors = () => {
   const { speciality } = useParams();
+  const navigate = useNavigate();
+
+  const { doctors, doctorsLoading } = useContext(AppContext);
+
   const [filterDoc, setFilterDoc] = useState([]);
   const [activeSpcl, setAddColor] = useState(speciality || "");
   const [mobileFilter, setMobileFilter] = useState(false);
-  const [loading, setLoading] = useState(true); // 👈 new loading state
-  const { doctors } = useContext(AppContext);
-  const navigate = useNavigate();
 
-  const handleFilter = () => {
-    setLoading(true);
-    setTimeout(() => { // simulate data load time
-      if (speciality) {
-        setFilterDoc(doctors.filter((doc) => doc.speciality === speciality));
-      } else {
-        setFilterDoc(doctors);
-      }
-      setLoading(false);
-    }, 800);
-  };
+  // ✅ Filter doctors whenever data or speciality changes
+  useEffect(() => {
+    if (doctorsLoading) return; // wait until API is loaded
+
+    if (speciality) {
+      setFilterDoc(doctors.filter((doc) => doc.speciality === speciality));
+    } else {
+      setFilterDoc(doctors);
+    }
+  }, [doctors, speciality, doctorsLoading]);
 
   const handleSpecilaityFilter = (spcl) => {
     if (spcl === speciality) {
-      navigate(`/doctors`);
+      navigate("/doctors");
       setAddColor("");
       return;
     }
     setAddColor(spcl);
     navigate(`/doctors/${spcl}`);
   };
-
-  useEffect(() => {
-    handleFilter();
-  }, [doctors, speciality]);
 
   const specialities = [
     "General physician",
@@ -50,14 +46,17 @@ const Doctors = () => {
   return (
     <div>
       <p className="text-gray-600">Browse through the doctors specialist.</p>
+
       <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
+        {/* Mobile filter toggle */}
         <button
           onClick={() => setMobileFilter((prev) => !prev)}
           className="py-1 px-3 border rounded text-sm transition-all md:hidden"
         >
           Filters
         </button>
-  
+
+        {/* Specialities list */}
         <div
           className={`flex-col gap-4 text-sm text-gray-600 ${
             mobileFilter ? "block" : "hidden"
@@ -68,28 +67,28 @@ const Doctors = () => {
               key={spcl}
               onClick={() => handleSpecilaityFilter(spcl)}
               className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border mb-2 border-gray-300 rounded transition-all cursor-pointer 
-                ${activeSpcl === spcl ? "activeSpcl" : ""}`}
+              ${activeSpcl === spcl ? "activeSpcl" : ""}`}
             >
               {spcl}
             </p>
           ))}
         </div>
-  
+
         {/* Main content */}
-        {loading ? (
-          // Show skeletons
+        {doctorsLoading ? (
+          // ✅ Show skeleton until API loads
           <div className="w-full grid grid-cols-auto md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
             {[...Array(6)].map((_, i) => (
               <DoctorCardSkeleton key={i} />
             ))}
           </div>
-        ) : filterDoc && filterDoc.length > 0 ? (
-          // Show doctor cards
+        ) : filterDoc.length > 0 ? (
+          // ✅ Show doctor cards
           <div className="w-full grid grid-cols-auto md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
             {filterDoc.map((doctor) => (
               <div
-                onClick={() => navigate(`/appointments/${doctor._id}`)}
                 key={doctor._id}
+                onClick={() => navigate(`/appointments/${doctor._id}`)}
                 className="border border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
               >
                 <img className="bg-[#EAEFFF]" src={doctor.image} alt="" />
@@ -106,8 +105,8 @@ const Doctors = () => {
               </div>
             ))}
           </div>
-        ) : doctors.length === 0 ? null :  (
-          // Show "not available" only when loading = false and data empty
+        ) : (
+          // ✅ Only show "not available" if API has loaded AND speciality filtered empty
           <div className="w-full flex items-center justify-center py-10">
             <p className="text-gray-600 text-lg">
               Doctor's currently not available
@@ -117,7 +116,6 @@ const Doctors = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Doctors;
