@@ -106,7 +106,7 @@ const Doctors = () => {
               </div>
             ))}
           </div>
-        ) : (
+        ) : doctors.length === 0 ? null :  (
           // Show "not available" only when loading = false and data empty
           <div className="w-full flex items-center justify-center py-10">
             <p className="text-gray-600 text-lg">
