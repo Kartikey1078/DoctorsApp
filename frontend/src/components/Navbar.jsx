@@ -12,7 +12,7 @@ const Navbar = () => {
     { name: "ALL DOCTORS", path: "/doctors" },
     { name: "ABOUT", path: "/about" },
     { name: "CONTACT", path: "/contact" },
-    { name: "CHECKOUT", path: "/checkout" },
+    // { name: "CHECKOUT", path: "/checkout" },
     { name: "ADMIN LOGIN", path: "https://doctorsappadmin.onrender.com/" },
   ];
   const [activeLink, setActiveLink] = useState("/");
@@ -119,7 +119,7 @@ const Navbar = () => {
                 <NavLink  onClick={()=> setShowMenu(false)} to='/about' ><p className='px-4 py-2 rounded inline-block'>ABOUT</p></NavLink>
                 <NavLink  onClick={()=> setShowMenu(false)} to='/contact' ><p className='px-4 py-2 rounded inline-block'>CONTACT</p></NavLink>
                 <NavLink onClick={()=> setShowMenu(false)} to='/checkout'><p className='px-4 py-2 rounded inline-block'>CHECKOUT</p></NavLink>
-                <NavLink  onClick={()=> setShowMenu(false)} to='/login' ><p className='px-4 py-2 rounded inline-block'>CREATE ACCOUNT</p></NavLink>
+                {/* <NavLink  onClick={()=> setShowMenu(false)} to='/login' ><p className='px-4 py-2 rounded inline-block'>CREATE ACCOUNT</p></NavLink> */}
                  <a
               href="https://doctorsappadmin.onrender.com/add-doctor"
               rel="noreferrer"
